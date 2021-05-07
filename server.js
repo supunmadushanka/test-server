@@ -13,7 +13,6 @@ app.get('/', function(req, res) {
 })
 
 app.post('/test', function(req, res) {
-
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -34,9 +33,6 @@ app.post('/test', function(req, res) {
             console.log(error);
         } else {
             console.log('Email sent: ' + info.response);
-            response.setHeader('Access-Control-Allow-Origin', '*')
-            response.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT')
-            response.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token')
             res.status(200).send(info);
         }
     });
