@@ -12,6 +12,10 @@ app.get('/', function(req, res) {
     res.send('hello from server');
 })
 
+app.listen(PORT, function() {
+    console.log("Server running on localhost:" + PORT);
+});
+
 app.post('/test', function(req, res) {
     var transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -37,7 +41,3 @@ app.post('/test', function(req, res) {
         }
     });
 })
-
-app.listen(PORT, function() {
-    console.log("Server running on localhost:" + PORT);
-});
