@@ -41,3 +41,7 @@ app.post('/test', function(req, res) {
         }
     });
 })
+
+app.post('/test1', function(req, res) {
+    res.status(200).send({ "message": "Data received" });
+})
