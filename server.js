@@ -22,6 +22,7 @@ const sqlconfig = {
     }
 };
 
+
 app.get('/', function(req, res) {
     let connection = sql.connect(sqlconfig, (err) => {
         if (err) {
