@@ -15,13 +15,15 @@ const sqlconfig = {
     password: 'Ranjani1970#',
     server: 'mysport-codefreks.database.windows.net',
     database: 'mysport',
-    port: 1433,
     "options": {
         "encrypt": true,
         "enableArithAbort": true
     }
 };
 
+app.listen(PORT, function() {
+    console.log("Server running on localhost:" + PORT);
+});
 
 app.get('/', function(req, res) {
     let connection = sql.connect(sqlconfig, (err) => {
@@ -32,10 +34,6 @@ app.get('/', function(req, res) {
         }
     });
 })
-
-app.listen(PORT, function() {
-    console.log("Server running on localhost:" + PORT);
-});
 
 app.post('/test', function(req, res) {
     var transporter = nodemailer.createTransport({
