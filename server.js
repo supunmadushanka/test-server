@@ -9,28 +9,29 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-const sqlconfig = {
-    user: 'supun',
-    password: 'Ranjani1970#',
-    server: 'mysport-codefreks.database.windows.net',
-    database: 'mysport',
-    "options": {
-        "encrypt": true
-    }
-};
+// const sqlconfig = {
+//     user: 'supun',
+//     password: 'Ranjani1970#',
+//     server: 'mysport-codefreks.database.windows.net',
+//     database: 'mysport',
+//     "options": {
+//         "encrypt": true
+//     }
+// };
 
 app.listen(PORT, function() {
     console.log("Server running on localhost:" + PORT);
 });
 
 app.get('/', function(req, res) {
-    let connection = sql.connect(sqlconfig, (err) => {
-        if (err) {
-            console.log(err);
-        } else {
-            res.send('db connected');
-        }
-    });
+    // let connection = sql.connect(sqlconfig, (err) => {
+    //     if (err) {
+    //         console.log(err);
+    //     } else {
+    //         res.send('db connected');
+    //     }
+    // });
+    res.send('db connected');
 })
 
 app.post('/test', function(req, res) {
