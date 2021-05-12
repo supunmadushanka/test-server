@@ -1,65 +1,38 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-var nodemailer = require('nodemailer');
-const sql = require('mssql');
-
-var PORT = process.env.PORT || 3000
+var PORT = process.env.PORT || 3001
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-// const sqlconfig = {
-//     user: 'supun',
-//     password: 'Ranjani1970#',
-//     server: 'mysport-codefreks.database.windows.net',
-//     database: 'mysport',
-//     "options": {
-//         "encrypt": true
-//     }
-// };
-
-app.listen(PORT, function() {
-    console.log("Server running on localhost:" + PORT);
+const http = require('http').createServer(app);
+const io = require('socket.io')(http, {
+    cors: {
+        origins: ['http://localhost:4200']
+    }
 });
 
+app.get('/', (req, res) => {
+    res.send('<h1>Hey Socket.io</h1>');
+});
+
+http.listen(PORT, () => {
+    console.log('listening on *:3001');
+});
+
+io.on('connection', (socket) => {
+    console.log('a user connected');
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+    socket.on('my message', (msg) => {
+        console.log('message: ' + msg);
+        io.emit('my broadcast', msg);
+    });
+});
+
+
 app.get('/', function(req, res) {
-    // let connection = sql.connect(sqlconfig, (err) => {
-    //     if (err) {
-    //         console.log(err);
-    //     } else {
-    //         res.send('db connected');
-    //     }
-    // });
-    res.send('db connected');
-})
-
-app.post('/test', function(req, res) {
-    var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'supunmadushanka19980822@gmail.com',
-            pass: 'mynameissuperman#'
-        }
-    });
-
-    var mailOptions = {
-        from: 'supunmadushanka19980822@gmail.com',
-        to: 'supunmadushanka19980822@gmail.com',
-        subject: req.body.email + ' - ' + req.body.FullName,
-        text: req.body.message
-    }
-
-    transporter.sendMail(mailOptions, function(error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-            res.status(200).send(info);
-        }
-    });
-})
-
-app.post('/test1', function(req, res) {
-    res.status(200).send({ "message": "Data received" });
+    res.send('server run');
 })
